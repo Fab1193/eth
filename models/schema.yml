@@ -9,3 +9,44 @@ models:
         data_tests:
           - unique
           - not_null
+
+  - name: stablecoin_activity_per_day
+    latest_version: 2
+    config:
+      contract:
+        enforced: true
+        alias_types: false
+    columns:
+      - name: date
+        data_type: date
+        description: ""
+
+      - name: token_address
+        data_type: string
+        description: ""
+
+      - name: type
+        data_type: varchar
+        description: ""
+
+      - name: symbol
+        data_type: varchar
+        description: ""
+
+      - name: total_usd_value
+        data_type: float
+        description: ""
+    
+    versions:
+    
+      - v: 1
+
+        deprecation_date: 2030-01-01
+        # Matches what's above -- nothing more needed
+    
+      - v: 2
+        # Removed a column -- this is the breaking change!
+        columns:
+          # This means: use the 'columns' list from above, but exclude country_name
+          - include: all
+            exclude: [token_address, symbol]

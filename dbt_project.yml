@@ -38,7 +38,6 @@ seeds:
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 
-
 models:
   eth:
     +materialized: table
@@ -48,6 +47,17 @@ models:
         - powerbi
         - report
       +schema: marts
+
+      analytics:
+        stablecoin_activity_per_day:
+          +post-hook:
+            - GRANT USAGE ON DATABASE DBT TO ROLE TESTER;
+            - GRANT USAGE ON SCHEMA DBT.DBT_DWEIGEL_MARTS TO ROLE TESTER;
+            - GRANT USAGE ON DATABASE DBT TO ROLE BA;
+            - GRANT USAGE ON SCHEMA DBT.DBT_DWEIGEL_MARTS TO ROLE BA;
+            - "{{ create_latest_version_view() }}"
+          +grants:
+            select: []
 
 
 vars:
