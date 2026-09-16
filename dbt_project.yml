@@ -1,16 +1,8 @@
-
-# Name your project! Project names should contain only lowercase characters
-# and underscores. A good package name should reflect your organization's
-# name or the intended use of these models
 name: 'eth'
 version: '1.0.0'
 
-# This setting configures which "profile" dbt uses for this project.
 profile: 'eth'
 
-# These configurations specify where dbt should look for different types of files.
-# The `model-paths` config, for example, states that models in this project can be
-# found in the "models/" directory. You probably won't need to change these!
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
@@ -18,30 +10,22 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
+flags:
+  fail_fast: true
 
-flags: { fail_fast: true }
-
-clean-targets: 
-  - "target" 
+clean-targets:
+  - "target"
   - "dbt_packages"
 
 seeds:
   +database: "seeds"
   +schema: "static"
 
-
-
-# Configuring models
-# Full documentation: https://docs.getdbt.com/docs/configuring-models
-
-# In this example config, we tell dbt to build all models in the example/
-# directory as views. These settings can be overridden in the individual model
-# files using the `{{ config(...) }}` macro.
-
 models:
   eth:
     +materialized: table
     +tags: ['eth', 'crypto']
+
     marts:
       +tags:
         - powerbi
@@ -51,21 +35,19 @@ models:
       analytics:
         stablecoin_activity_per_day:
           +post-hook:
-            - GRANT USAGE ON DATABASE DBT TO ROLE TESTER;
-            - GRANT USAGE ON SCHEMA DBT.DBT_DWEIGEL_MARTS TO ROLE TESTER;
-            - GRANT USAGE ON DATABASE DBT TO ROLE BA;
-            - GRANT USAGE ON SCHEMA DBT.DBT_DWEIGEL_MARTS TO ROLE BA;
+            - "GRANT USAGE ON DATABASE DBT TO ROLE TESTER;"
+            - "GRANT USAGE ON SCHEMA DBT.DBT_FAB_MARTS TO ROLE TESTER;"
+            - "GRANT USAGE ON DATABASE DBT TO ROLE BA;"
+            - "GRANT USAGE ON SCHEMA DBT.DBT_FAB_MARTS TO ROLE BA;"
             - "{{ create_latest_version_view() }}"
           +grants:
-            select: []
-
+            select: ['BA']
 
 vars:
-  token_name_var: 'link'
-  token_address_var: '0x514910771af9ca656af840dff83e8264ecf986ca'
-  token_decimals_var: '18'
-
+  token_name_var: 'tron'
+  token_address_var: '0x50327c6c5a14dcade707abad2e27eb517df87ab5'
+  token_decimals_var: '6'
 
 dispatch:
-- macro_namespace: dbt_utils
-  search_order: ['eth', 'dbt_utils']
+  - macro_namespace: dbt_utils
+    search_order: ['eth', 'dbt_utils']
