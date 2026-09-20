@@ -37,11 +37,9 @@ models:
           +post-hook:
             - "GRANT USAGE ON DATABASE DBT TO ROLE TESTER;"
             - "GRANT USAGE ON SCHEMA DBT.DBT_FAB_MARTS TO ROLE TESTER;"
-            - "GRANT USAGE ON DATABASE DBT TO ROLE BA;"
-            - "GRANT USAGE ON SCHEMA DBT.DBT_FAB_MARTS TO ROLE BA;"
             - "{{ create_latest_version_view() }}"
           +grants:
-            select: ['BA']
+            select: ['TESTER']
 
 vars:
   token_name_var: 'tron'

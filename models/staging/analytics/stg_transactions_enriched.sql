@@ -49,7 +49,6 @@ where date >= (select max(date) from {{ this }} )
 
 )
 
-
 select
 *
 from transactions_enriched
