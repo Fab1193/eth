@@ -4,10 +4,10 @@ eth:
       account: GJSIMEO-XS04021
       database: CI
       private_key_path: "{{ env_var('DBT_PRIVATE_KEY_PATH') }}"
-      role: ACCOUNTADMIN
-      schema: CI_SCHEMA
+      role: "{{ env_var('DBT_SNOWFLAKE_ROLE')}}"
+      schema: "{{ env_var('DBT_SCHEMA')}}"
       threads: 1
       type: snowflake
-      user: FAB11
+      user: "{{ env_var('DBT_SNOWFLAKE_USER')}}"
       warehouse: COMPUTE_WH
   target: ci
