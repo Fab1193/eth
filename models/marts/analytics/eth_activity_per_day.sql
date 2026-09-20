@@ -4,7 +4,7 @@ select
 date,
 transaction_category,
 count(*) as tx_count,
-{{ conversion('value', '18') }} as eth_value
+{{ conversion('value', '18') }} as sum_value_ethereum
 from {{ ref('stg_transactions_enriched') }}
 group by 
 date,
