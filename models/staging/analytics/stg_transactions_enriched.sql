@@ -26,6 +26,7 @@ t.receipt_contract_address,
 t.input,
 tt.token_transfer_count,
 1 as new_field,
+2 as new_field_2,
 
 case
     when t.receipt_contract_address != '' then 'contract_creation'
