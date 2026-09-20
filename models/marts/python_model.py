@@ -15,7 +15,6 @@ def model(dbt, session):
     @udf(
         return_type=BooleanType(),
         input_types=[DateType()],
-        runtime_version="3.10",
         packages=["holidays"]
     )
     def is_holiday_udf(date_col):

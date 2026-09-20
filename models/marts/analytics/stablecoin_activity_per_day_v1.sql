@@ -1,4 +1,4 @@
-{{ config(tags=['stablecoin'], grants = {'+select': ['TESTER']})}}
+{{ config(tags=['stablecoin']) }}
 
 select
 t.date,
