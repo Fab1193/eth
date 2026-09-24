@@ -25,6 +25,14 @@ models:
         data_tests:
           - unique
           - not_null
+          # - relationships:
+          #     to: ref('stg_token_transfers')
+          #     field: transaction_hash
+          #     severity: warn
+          #     config:
+          #       store_failures: true
+          #       store_failures_as: table
+          #       where: date > current_date - 25
 
   - name: stablecoin_activity_per_day
     latest_version: 2
@@ -66,3 +74,24 @@ models:
         columns:
           - include: all
             exclude: [token_address, symbol]
+
+
+unit_tests:
+  - name: test_is_valid_transaction_category_breakdown
+    model: stg_transactions_enriched
+    overrides:
+      macros:
+        # unit test this model in "full refresh" mode
+        is_incremental: false 
+    given:
+      - input: ref('stg_transactions')
+        rows:
+          - {receipt_contract_address: 'bla'}
+
+      - input: ref('stg_token_transfers')
+        rows:
+          - {transaction_hash: 'bla'}
+
+    expect:
+      rows:
+        - {transaction_category: 'contract_creation'}
