@@ -1,0 +1,8 @@
+snapshots:
+  - name: airbnb_snap
+    relation: source('airbnb', 'apartment_listings')
+    config:
+      schema: snaps
+      strategy: timestamp
+      unique_key: listing_id
+      updated_at: updated_at
