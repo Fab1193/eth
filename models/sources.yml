@@ -1,5 +1,3 @@
-version: 2
-
 sources:
   - name: eth
     database: eth  
@@ -7,10 +5,10 @@ sources:
 
     tables:
       - name: contracts
+        freshness: 
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 40, period: day}
+        loaded_at_field: to_timestamp(date) 
       - name: contracts_clone
       - name: token_transfers
       - name: transactions
-        columns:
-          - name: hash
-            data_tests:
-              - unique
