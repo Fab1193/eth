@@ -16,7 +16,7 @@ models:
               field: hash
 
   - name: stg_transactions
-    description: "Transactions in the Ethereum Blockchain"
+    description: "{{ doc('transactions') }}"
     columns:
       - name: hash
         description: >
@@ -95,3 +95,15 @@ unit_tests:
     expect:
       rows:
         - {transaction_category: 'contract_creation'}
+
+exposures:
+
+  - name: eth_activity_per_day
+    type: dashboard
+
+    depends_on:
+      - ref('stg_transactions_enriched')
+
+    owner:
+      name: Fabricio
+      email: fabricio.quesadaramirez@gmail.com
