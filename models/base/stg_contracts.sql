@@ -1,10 +1,4 @@
-{{ config(materialized='incremental', 
-		incremental_strategy='microbatch',
-		begin='2026-09-20', 
-		event_time='date', 
-		batch_size='day',
-		lookback=2, 
-		concurrent_batches=false)}}
+{{ config(materialized='view')}}
 
 select
 address,
